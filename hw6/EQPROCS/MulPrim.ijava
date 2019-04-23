@@ -1,0 +1,7 @@
+MulPrim
+%%%
+    public Val eval() {
+        return PrimVal.mulPrim;
+    }
+%%%
+

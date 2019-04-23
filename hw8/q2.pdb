@@ -1,0 +1,13 @@
+j(0,0).
+j(1,0).
+j(2,1).
+j(K, Answer) :- K1 is K-1, K2 is K-2, K3 is K-3, K1 >= 0, K2 >= 0, K3 >= 0, j(K1, Answer1), j(K2, Answer2), j(K3, Answer3), Answer is Answer3 * Answer2 + Answer1.
+
+
+% jseries( 5, Answer ).
+%     should yield
+% Answer = [2, 1, 1, 1, 0, 0]
+%     and no further answers should display
+%
+jseries( 0, [ B ] ) :- j( 0, B ).
+jseries( K, [ B | Rest ] ) :- K > 0, j( K, B ), N is K - 1, jseries( N, Rest ).

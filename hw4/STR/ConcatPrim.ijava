@@ -1,0 +1,10 @@
+ConcatPrim
+%%%
+    public Val apply(Val[] vals) {
+        if (vals.length != 2)
+            throw new RuntimeException("Two arguments expected.");
+        String s0 = vals[0].strVal();
+        String s1 = vals[1].strVal();
+        return new StrVal(s0 + s1);
+    }
+%%%

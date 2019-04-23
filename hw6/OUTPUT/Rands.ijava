@@ -1,0 +1,25 @@
+Rands
+%%%
+    /**
+     * Fetch the values of each expression in the parameter (opeRands) list.
+     */
+    public List<Val> evalRands( Env env ) {
+        List<Val> args = new ArrayList<Val>();
+        for ( Exp exp : expList )
+            args.add( exp.eval( env ) );
+        return args;
+    }
+
+    @Override
+    public String toString() {
+	String s = "";   // the string to return
+        String sep = ""; // no separator for the first expression
+	// get all of the expressions in the expression list
+	for (Exp e : expList) {
+	    s += sep + e;
+	    sep = ",";   // commas separate the rest of the expressions
+        }
+        return s;
+    }
+%%%
+

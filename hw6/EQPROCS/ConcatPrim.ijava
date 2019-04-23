@@ -1,0 +1,6 @@
+ConcatPrim
+%%%
+    public Val eval() {
+        return PrimVal.concatPrim;
+    }
+%%%

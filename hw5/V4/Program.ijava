@@ -1,0 +1,22 @@
+Program
+%%%
+    // No more fake assignments needed, now that we have 'let'.
+    public static Env initEnv = Env.NULL;
+
+    @Override
+    public String toString() {
+        String evaluation = null;
+        String rendering = exp.toString();
+        try {
+            evaluation = exp.eval( initEnv ).toString();
+        }
+        catch( Exception e ) {
+            evaluation = "an exception: \"" + e.getMessage() + '"';
+        }
+        return
+           "The code: " + rendering + '\n' +
+           "  evaluates to " + evaluation;
+    }
+
+%%%
+

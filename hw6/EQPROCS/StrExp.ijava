@@ -1,0 +1,10 @@
+StrExp
+%%%
+    public String toString() {
+        return str.str;
+    }
+
+    public Val eval(Env env) {
+        return new StrVal(str.str);
+    }
+%%%

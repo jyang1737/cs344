@@ -1,0 +1,13 @@
+
+Program
+%%%
+    // No more fake assignments needed, now that we have 'let'.
+    public static Env initEnv = Env.ENV_NULL;
+
+    @Override
+    public String toString() {
+        return exp.eval( initEnv ).toString();
+    }
+
+%%%
+

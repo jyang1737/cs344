@@ -1,0 +1,144 @@
+# Language V6
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+
+token ADD1OP 'add1'
+token ADDOP '\+'
+token BLANK 'blank'
+token COMMA ','
+token CONCAT 'concat'
+token DEFINE 'define'
+token DIVOP '/'
+token DOT '\.'
+token ELSE 'else'
+token EQUALS '='
+token GETCHAR 'getChar'
+token IF 'if'
+token LET 'let'
+token LETREC 'letrec'
+token LBRACE '\{'
+token LPAREN '\('
+token MULOP '\*'
+token NEWLINE 'newline'
+token IN 'in'
+token PROC 'proc'
+token RBRACE '\}'
+token RPAREN '\)'
+token SEMI ';'
+token SETCHAR 'setChar'
+token SHOWCHAR 'showChar'
+token SHOW 'show'
+token SUB1OP 'sub1'
+token SUBOP '\-'
+token THEN 'then'
+token ZEROP 'zero\?'
+
+token LIT '-?\d+'
+token VAR '[A-Za-z]\w*\??|[🎃👻]+'
+token CHR '\'.'
+token STR '\"[^"]*\"'
+
+%
+<program>:Define ::= DEFINE <VAR> EQUALS <exp>
+<program>:Eval   ::= <exp>
+
+<exp>:CharExp    ::= <CHR>
+<exp>:LitExp     ::= <LIT>
+<exp>:VarExp     ::= <VAR>
+<exp>:StrExp     ::= <STR>
+<exp>:PrimExp    ::= <prim>
+<exp>:IfExp      ::= IF <exp>test THEN <exp>thenPart ELSE <exp>elsePart
+<exp>:LetExp     ::= LET <letDecls> IN <exp>
+<exp>:LetrecExp  ::= LETREC <letrecDecls> IN <exp>
+<exp>:ProcExp    ::= <proc> # represents a procedure, not a procedure call
+<exp>:AppExp     ::= DOT <exp> LPAREN <rands> RPAREN # APPly (call) a proc
+<exp>:SeqExp     ::= LBRACE <exp> <seqExps> RBRACE
+<exp>:ShowExp    ::= SHOW <exp>
+<exp>:BlankExp   ::= BLANK
+<exp>:NewlineExp ::= NEWLINE
+<exp>:ShowCharExp ::= SHOWCHAR <exp>
+
+<letDecls>       **= <VAR> EQUALS <exp>
+<letrecDecls>    **= <VAR> EQUALS <proc>
+
+<rands>          **= <exp> +COMMA
+
+<seqExps>        **= SEMI <exp>
+
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:MulPrim   ::= MULOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:ZeropPrim  ::= ZEROP
+<prim>:ConcatPrim ::= CONCAT
+<prim>:GetCharPrim ::= GETCHAR
+<prim>:SetCharPrim ::= SETCHAR
+
+<proc>           ::= PROC LPAREN <formals> RPAREN <exp> # param list, body
+<formals>        **= <VAR> +COMMA
+%
+
+# class methods for the semantics phase
+
+include Add1Prim.ijava
+include AddPrim.ijava
+include AppExp.ijava
+include BlankExp.ijava
+include CharExp.ijava
+include ConcatPrim.ijava
+include Define.ijava
+include DivPrim.ijava
+include Eval.ijava
+include Exp.ijava
+include Formals.ijava
+include GetCharPrim.ijava
+include IfExp.ijava
+include LetDecls.ijava
+include LetrecDecls.ijava
+include LetExp.ijava
+include LetrecExp.ijava
+include LitExp.ijava
+include MulPrim.ijava
+include NewlineExp.ijava
+include Prim.ijava
+include PrimExp.ijava
+include Proc.ijava
+include ProcExp.ijava
+include Program.ijava
+include Rands.ijava
+include SeqExp.ijava
+include SetCharPrim.ijava
+include ShowExp.ijava
+include ShowCharExp.ijava
+include StrExp.ijava
+include Sub1Prim.ijava
+include SubPrim.ijava
+include VarExp.ijava
+include ZeropPrim.ijava
+
+# Environment classes
+#
+include Binding.ijava
+include Bindings.ijava
+include Env.ijava
+include EnvNode.ijava
+include IntVal.ijava
+include NilVal.ijava
+include ProcVal.ijava
+include PrimVal.ijava
+include StrVal.ijava
+include Val.ijava
+include AddPrimVal.ijava
+include SubPrimVal.ijava
+include MulPrimVal.ijava
+include DivPrimVal.ijava
+include Add1PrimVal.ijava
+include Sub1PrimVal.ijava
+include ZeropPrimVal.ijava
+include ConcatPrimVal.ijava
+include GetCharPrimVal.ijava
+include SetCharPrimVal.ijava
+

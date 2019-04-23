@@ -1,0 +1,7 @@
+let
+  u = 57
+in
+  let
+    add3 = proc( x, y, z ) +( +( x, u ), +( y, z ) )
+  in
+    .add3( 8, 13, 21 )

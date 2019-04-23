@@ -1,0 +1,24 @@
+define add3 = proc(a: int, b: int, c: int): int +(a, +(b,c))
+
+declare mapReduce : [int, int, [int=>int], [int,int=>int] => int]
+define mapReduce = proc(count: int, start: int, map: [int => int], reduce: [int, int => int]): int
+                               if zero?(count) then start
+                                  else .mapReduce(
+                                                sub1(count),
+                                                .reduce(start,.map(count)),
+                                                map, reduce
+                                               )
+
+let
+    i = 3
+    j = 8
+    k = 11
+in
+    .add3( i, j, k )
+
+let
+    starter = 100
+    mapper = proc( x:int ):int *( x, x )
+    reducer = proc( v1:int, v2:int ):int .add3( v1, v2, 0 )
+in
+    .mapReduce( 5, starter, mapper, reducer )

@@ -1,0 +1,7 @@
+ZeropPrim
+%%%
+    public Val eval() {
+        return PrimVal.zeropPrim;
+    }
+%%%
+

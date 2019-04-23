@@ -1,0 +1,19 @@
+PrimVal
+%%%
+    import java.util.*;
+    public abstract class PrimVal implements Val {
+        
+        public static Val addPrim = new AddPrimVal();
+        public static Val subPrim = new SubPrimVal();
+        public static Val mulPrim = new MulPrimVal();
+        public static Val divPrim = new DivPrimVal();
+        public static Val add1Prim = new Add1PrimVal();
+        public static Val sub1Prim = new Sub1PrimVal();
+        public static Val zeropPrim = new ZeropPrimVal();
+        public static Val concatPrim = new ConcatPrimVal();
+        public static Val getCharPrim = new GetCharPrimVal();
+        public static Val setCharPrim = new SetCharPrimVal();
+
+        public abstract Val apply(List<Val> args, Env e);
+    }
+%%%

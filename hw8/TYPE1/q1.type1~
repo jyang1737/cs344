@@ -1,0 +1,10 @@
+define add3 = proc(a: int, b: int, c: int): int +(a, +(b,c))
+
+declare mapReduce : [int, int, [int=>int], [int,int,int=>int]]
+define mapReduce = proc(count: int, start: int, map: [int => int], reduce: [int, int, int => int]): int
+                               if zero?(count) then start
+                                  else .mapReduce(
+                                                sub1(count),
+                                                .reduce(start,.map(count)),
+                                                map, reduce
+                                               )

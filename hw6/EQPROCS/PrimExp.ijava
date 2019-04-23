@@ -1,0 +1,10 @@
+PrimExp
+%%%
+    public Val eval(Env env) {
+        return prim.eval();
+    }
+
+    public String toString() {
+        return prim.toString();
+    }
+%%%

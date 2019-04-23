@@ -1,0 +1,11 @@
+
+LitExp
+%%%
+    public String toString() {
+	return lit.str;
+    }
+    public Val eval( Env env ) {
+        return new IntVal( Integer.parseInt( lit.str ) );
+    }
+%%%
+

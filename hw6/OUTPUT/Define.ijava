@@ -1,0 +1,19 @@
+Define
+%%%
+    /**
+     * Add this object's (id,value) pair to the global environment.
+     * The value's expression is evaluated based on the bindings that
+     * already exist in that environment. So this is a bit weird.
+     * Each DEFINE execution modifies the environment that is maintained
+     * in the read-evaluate-print (Rep) form of the Parser program.
+     * @return A description of the action that occurred.
+     */
+    @Override
+    public String execute() {
+        Val val = exp.eval(Program.initEnv);
+	String s = var.str;
+        Program.initEnv.addFirst(new Binding(s, val));
+	return "defined"; // return s + " set to " + val;
+    }
+%%%
+

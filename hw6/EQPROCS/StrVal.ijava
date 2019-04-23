@@ -1,0 +1,26 @@
+StrVal
+%%%
+    
+    public class StrVal implements Val {
+        public final StringBuffer v;
+
+        public StrVal(String s) {
+            this.v = new StringBuffer(s.replaceAll("\"", ""));
+        }
+
+        public boolean isTrue() {
+            return v.length() != 0;
+        }
+
+        public StringBuffer strVal() {
+            return this.v;
+        }
+
+        public String toString() {
+            return "\"" + v.toString() + "\"";
+        }
+
+
+    }
+
+%%%

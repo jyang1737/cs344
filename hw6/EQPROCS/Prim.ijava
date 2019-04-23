@@ -1,0 +1,8 @@
+Prim
+%%%
+    public abstract Val eval();
+
+    public String toString() {
+        return this.eval().toString();
+    }
+%%%

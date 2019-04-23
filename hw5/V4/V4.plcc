@@ -1,0 +1,88 @@
+# Language V4
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+
+token ADD1OP 'add1'
+token ADDOP '\+'
+token COMMA ','
+token DIVOP '/'
+token DOT '\.'
+token ELSE 'else'
+token EQUALS '='
+token IF 'if'
+token LET 'let'
+token LPAREN '\('
+token MULOP '\*'
+token IN 'in'
+token PROC 'proc'
+token RPAREN '\)'
+token SUB1OP 'sub1'
+token SUBOP '\-'
+token THEN 'then'
+token ZEROP 'zero\?'
+
+token LIT '\d+'
+token VAR '[A-Za-z]\w*'
+
+%
+<program>        ::= <exp>
+
+<exp>:LitExp     ::= <LIT>
+<exp>:VarExp     ::= <VAR>
+<exp>:PrimAppExp ::= <prim> LPAREN <rands> RPAREN
+<exp>:IfExp      ::= IF <exp>test THEN <exp>thenPart ELSE <exp>elsePart
+<exp>:LetExp     ::= LET <letDecls> IN <exp>
+<exp>:ProcExp    ::= <proc> # represents a procedure, not a procedure call
+<exp>:AppExp     ::= DOT <exp> LPAREN <rands> RPAREN # APPly (call) a proc
+
+<letDecls>       **= <VAR> EQUALS <exp>
+
+<rands>          **= <exp> +COMMA
+
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:MulPrim   ::= MULOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:ZeropPrim  ::= ZEROP
+
+<proc>           ::= PROC LPAREN <formals> RPAREN <exp> # param list, body
+<formals>        **= <VAR> +COMMA
+%
+
+# class methods for the semantics phase
+
+include Add1Prim.ijava
+include AddPrim.ijava
+include AppExp.ijava
+include DivPrim.ijava
+include Exp.ijava
+include Formals.ijava
+include IfExp.ijava
+include LetDecls.ijava
+include LetExp.ijava
+include LitExp.ijava
+include MulPrim.ijava
+include Prim.ijava
+include PrimAppExp.ijava
+include Proc.ijava
+include ProcExp.ijava
+include Program.ijava
+include Rands.ijava
+include Sub1Prim.ijava
+include SubPrim.ijava
+include VarExp.ijava
+include ZeropPrim.ijava
+
+# Environment classes
+#
+include Binding.ijava
+include Bindings.ijava
+include Env.ijava
+include EnvNode.ijava
+include IntVal.ijava
+include ProcVal.ijava
+include Val.ijava
+

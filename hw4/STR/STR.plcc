@@ -1,0 +1,57 @@
+# Language V1: primitive expressions
+# The code evaluates expressions.
+# The Exp class code includes something to set up some
+# initial bindings.
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+LIT '\d+'
+LPAREN '\('
+RPAREN '\)'
+COMMA ','
+ADDOP '\+'
+SUBOP '\-'
+ADD1OP 'add1'
+SUB1OP 'sub1'
+CONCAT 'concat'
+VAR '[A-Za-z]\w*'
+STR '\"[^"]*\"'
+%
+<program>        ::= <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:VarExp     ::= <VAR>
+<exp>:StrExp     ::= <STR>
+<exp>:PrimAppExp ::= <prim> LPAREN <rands> RPAREN
+<rands>          **= <exp> +COMMA
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:ConcatPrim ::= CONCAT
+%
+
+# class methods that just print out the expression
+# (Remember that use of toString is only mandated at the tree's
+#  root node.)
+
+include Add1Prim.ijava
+include AddPrim.ijava
+include ConcatPrim.ijava
+include Exp.ijava
+include LitExp.ijava
+include Prim.ijava
+include PrimAppExp.ijava
+include Program.ijava
+include Rands.ijava
+include StrExp.ijava
+include Sub1Prim.ijava
+include SubPrim.ijava
+include VarExp.ijava
+
+include Env.ijava
+include EnvNode.ijava
+include Binding.ijava
+include Bindings.ijava
+include Val.ijava
+include IntVal.ijava
+include StrVal.ijava

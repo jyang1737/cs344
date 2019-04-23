@@ -1,0 +1,7 @@
+Sub1Prim
+%%%
+    public Val eval() {
+        return PrimVal.sub1Prim;
+    }
+%%%
+

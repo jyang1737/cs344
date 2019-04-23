@@ -1,2 +1,37 @@
-findGoal(p(X,Y)) :- findGoal(p(X,Y),L).
-findGoal(p(X,Y),L) :- goal(X,Y).
+% out of bounds error
+findGoal(p(X,Y)) :- boundary(XMAX, YMAX), (X < 0; X >= XMAX), (Y < 0; Y >= YMAX), !, write('p('), write(X), write(','), write(Y), write(')'), write(' is out of bounds.'), fail.
+
+% start in wall error
+findGoal(p(X,Y)) :- wall(X,Y), !, write('Cannot start in a wall.'), fail.
+
+% initial call
+findGoal(p(X,Y)) :- write('Starting at '), write(X), write(' '), write(Y), nl,
+                    findGoal(p(X,Y), []).
+% if p is the goal
+findGoal(p(X,Y), L) :- goal(X,Y), append(L, [p(X,Y)], NewL), write('Goal reached!'),
+                       nl, write(NewL).
+% recursive call
+findGoal(p(X,Y), L) :- append(L,[p(X,Y)],NewL),
+
+                       ((NewX is X-1, openSpace(p(NewX, Y), NewL),
+                       write('Go to '), write(NewX), write(' '), write(Y), nl,
+                       findGoal(p(NewX,Y), NewL));
+                       
+                       (NewX is X+1, openSpace(p(NewX,Y), NewL),
+                       write('Go to '), write(NewX), write(' '), write(Y), nl,
+                       findGoal(p(NewX,Y), NewL));
+                       
+                       (NewY is Y-1, openSpace(p(X,NewY), NewL),
+                       write('Go to '), write(X), write(' '), write(NewY), nl,
+                       findGoal(p(X,NewY), NewL));
+                       
+                       (NewY is Y+1, openSpace(p(X,NewY), NewL),
+                       write('Go to '), write(X), write(' '), write(NewY), nl,
+                       findGoal(p(X,NewY), NewL))).
+                       
+% checks if space is within boundaries
+inMaze(p(X,Y)) :- boundary(XMAX, YMAX),
+                  X >= 0, X < XMAX, Y >= 0, Y < YMAX.
+
+% checks if space is not in list and not in wall
+openSpace(p(X,Y), L) :- inMaze(p(X,Y)), \+wall(X,Y), \+member(p(X,Y), L).

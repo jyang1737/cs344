@@ -1,0 +1,8 @@
+DivPrim
+%%%
+    public Val eval() {
+         return PrimVal.divPrim;
+    }
+%%%
+
+

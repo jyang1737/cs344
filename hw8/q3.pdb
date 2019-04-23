@@ -1,0 +1,50 @@
+parent(a,x).
+parent(a,y).
+parent(a,z).
+parent(albert,bob).
+parent(albert,pat).
+parent(b,x).
+parent(b,y).
+parent(b,z).
+parent(c,x).
+parent(c,y).
+parent(c,z).
+parent(cheetara,alluro).
+parent(cheetara,mummra).
+parent(cheetara,tygra).
+parent(chester,moms).
+parent(chester,pops).
+parent(don,bob).
+parent(gaston,arturo).
+parent(gaston,wendy).
+parent(jeff,jaime).
+parent(jeff,wendy).
+parent(jerrod,bob).
+parent(jerrod,chris).
+parent(jody,moms).
+parent(jody,pops).
+parent(liono,alluro).
+parent(liono,snarf).
+parent(liono,tygra).
+parent(maria,jaime).
+parent(maria,wendy).
+parent(panthro,alluro).
+parent(panthro,mummra).
+parent(panthro,tygra).
+parent(sam,moms).
+parent(sam,pops).
+parent(tom,jaime).
+parent(tom,wendy).
+
+has3Parents(X) :- parent(X,A), parent(X,B), parent(X,C), A \== B, B \== C, C \== A, write(A),nl, write(B),nl, write(C).
+
+% It appears that every permutation of three parents will be shown since we don't check if a parent
+% was already used. Supposing A,B,C are variables for the parents, we can have
+% A = x, B = y, C = Z, which would be a different solution than A = x, B = z, C = y.
+
+partialSibling(X,Y) :- parent(X,A), parent(Y,A), parent(X,B), parent(Y,C), \+parent(X,C), \+parent(Y,B), X \== Y.
+
+% Pairs with two of the same parents, but with three parents will show up twice, since you can
+% permutate the two like parents in two ways.
+% Example: A = alluro, B = mummra, C = snarf and A = tygra, B = mummra, C = snarf will both work
+% for liono and cheetara, thus outputting true twice. 

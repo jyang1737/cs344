@@ -1,0 +1,15 @@
+GetCharPrimVal
+%%%
+    import java.util.*;
+    public class GetCharPrimVal extends PrimVal {
+        public Val apply(List<Val> args, Env e) {
+            String s = ((StrVal)(args.get(0))).v.toString();
+            int i = ((IntVal) (args.get(1))).v;
+            return new IntVal((int)(s.charAt(i)));
+        }
+
+        public String toString() {
+            return "getChar";
+        }
+    }
+%%%

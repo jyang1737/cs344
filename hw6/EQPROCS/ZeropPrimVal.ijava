@@ -1,0 +1,14 @@
+ZeropPrimVal
+%%%
+    import java.util.*;
+    public class ZeropPrimVal extends PrimVal {
+        public Val apply(List<Val> args, Env e) {
+            int i = ((IntVal) (args.get(0))).v;
+            return new IntVal(i == 0 ? 1 : 0);
+        }
+
+        public String toString() {
+            return "zerop";
+        }
+   }
+%%%

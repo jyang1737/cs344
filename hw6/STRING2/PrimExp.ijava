@@ -1,0 +1,18 @@
+PrimExp:import
+%%%
+import java.util.Arrays;
+%%%
+
+PrimExp
+%%%
+    @Override
+    public Val eval( Env env ) {
+        return prim.eval();
+    }
+
+    @Override
+    public String toString() {
+	return prim.toString();
+    }
+%%%
+

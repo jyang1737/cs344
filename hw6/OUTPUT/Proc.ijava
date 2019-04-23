@@ -1,0 +1,12 @@
+Proc
+%%%
+    public Val makeClosure( Env env ) {
+        return new ProcVal( formals, exp, env );
+    }
+
+    @Override
+    public String toString() {
+        return "λ" + formals + " { return " + exp + " }";
+    }
+%%%
+

@@ -1,0 +1,9 @@
+NewlineExp
+%%%
+    public Val eval(Env env) {
+        System.out.print("\n");
+        System.out.flush();
+        return Val.NIL;
+    }
+
+%%%

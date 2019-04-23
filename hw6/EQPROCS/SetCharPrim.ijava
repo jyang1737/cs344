@@ -1,0 +1,6 @@
+SetCharPrim
+%%%
+    public Val eval() {
+        return PrimVal.setCharPrim;
+    }
+%%%

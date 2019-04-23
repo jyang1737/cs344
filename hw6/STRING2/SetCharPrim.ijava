@@ -1,0 +1,18 @@
+SetCharPrim
+%%%
+    public Val apply(Val[] vals) {
+        if (vals.length != 3)
+            throw new RuntimeException("Two arguments expected.");
+        if ( !(vals[0] instanceof StrVal))
+            throw new RuntimeException("Type error: needed String value.");
+        if ( !(vals[1] instanceof IntVal))
+            throw new RuntimeException("Type error: needed integer value.");
+        if ( !(vals[2] instanceof IntVal))
+            throw new RuntimeException("Type error: needed integer value.");
+        StringBuffer s = ((StrVal) vals[0]).v;
+        int i = ((IntVal) vals[1]).v;
+        char c = (char) ((IntVal) vals[2]).v;
+        s.setCharAt(i,c);
+        return new StrVal(s.toString());
+    }
+%%%

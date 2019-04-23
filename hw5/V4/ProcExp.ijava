@@ -1,0 +1,16 @@
+ProcExp
+%%%
+    /**
+     * Create the value of a procedure.
+     * Remember, this is not calling the procedure!
+     */
+    public Val eval( Env env ) {
+        return proc.makeClosure( env );
+    }
+
+    @Override
+    public String toString() {
+        return proc.toString();
+    }
+%%%
+

@@ -1,0 +1,9 @@
+BlankExp
+%%%
+    public Val eval(Env env) {
+        System.out.print(" ");
+        System.out.flush();
+        return Val.NIL;
+    }
+
+%%%

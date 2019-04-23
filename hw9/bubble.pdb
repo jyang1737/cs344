@@ -1,0 +1,86 @@
+% Prolog Optional Problem
+%
+% Author: James Yang
+
+% This file contains specifications for three procedures.
+% - bubbles: the full bubble sort
+% - bubble: one pass of the bubble sort
+% - checkIfDone: mutually recursive with bubbles; decides if list is sorted
+
+
+% Procedure: bubbles
+% Perform a bubble sort of a list.
+% operand 1: the unsorted list (must be instantiated)
+% operand 2: the sorted list
+
+% bubbles, case 1: operand 1 has no elements
+%
+bubbles( [], [] ). %(given)
+
+% bubbles, case 2: operand 1 has one element
+%
+bubbles(X,X) :- length(X,1), !.
+
+% bubbles, case 3: operand 1 has at least two elements
+% Execute bubble to do a single pass.
+% Then use checkIfDone to see if a recursive call of this procedure is needed.
+%
+bubbles(U,S) :- bubble(U,Result,X), checkIfDone(Result,X,S), !.
+
+% Procedure: bubble
+% Perform a single pass of a bubble sort on a list
+% operand 1: the original list (must be bound)
+% operand 2: the original list,
+%            but with the next largest element moved to the end
+% operand 3: 0 if operands 1 and 2 are identical
+%            1 if they are not (an element was moved)
+% Example
+%            bubble([2,5,3,1,8,9],Result,More) succeeds with
+%            Result = [2,3,1,5,8,9], More = 1 because 5 got moved to the end.
+
+% bubble, case 1: operand 1 1st element =< operand 1 2nd element
+% The heads of the operand 1 and 2 lists are the same.
+% The value of operand 3 must be determined by the needed recursive application
+% of bubble on the tail.
+%
+bubble([H,A|T1], [H|T2], X) :- H =< A, bubble([A|T1], T2, X).
+
+% bubble, case 2: operand 1 1st element > operand 1 2nd element
+% The head of the list in operand 2 is the second element from operand 1.
+% The value of operand 3 is 1 because a swap will have been made.
+% (But a recursive application of bubble is still needed on the tail.)
+%
+bubble([H,A|T1], [A|T2], 1) :- H > A, bubble([H|T1], T2, 1).
+
+% bubble, case 3: operand 1 has one element.
+% The two list operands are the same, and the third is 0: no swap.
+%
+bubble(U,U,_) :- length(U,1).
+
+% (bubble will never be called with empty lists.)
+
+% Procedure: checkIfDone
+% Based on the value of operand 2, more bubble sorting may or may not be needed.
+% operand 1: the list in its current state of partial sorting from bubble/3
+% operand 2: a 0/1 value stating if bubble/3 changed anything
+% operand 3: the fully sorted list
+% Operands 1 and 2 must be bound.
+
+% checkIfDone, case 1: operand 2 is 0.
+% No swapping was done, so operand 1 and 3 lists are identical.
+%
+checkIfDone(X,0,X).
+
+% checkIfDone, case 2: operand 2 is 1.
+% Swapping was done, so bubbles is called again to finish sorting operand 1.
+%
+checkIfDone(U,1,S) :- bubbles(U,S).
+
+% You should first do your own simple tests. But once you are more
+% confident, execute the following as a test. It has five elements
+% with one duplicate.
+
+test :-
+        permutation( [ 1, 2, 3, 3, 4 ], In ), write( In ), write( ': ' ),
+        bubbles( In, Out ),
+        msort( Out, Out ), write( 'Pass\n' ), fail.

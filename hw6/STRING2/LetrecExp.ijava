@@ -1,0 +1,18 @@
+LetrecExp
+
+%%%
+    @Override
+    public String toString() {
+        String result = "let ";
+        result += letrecDecls;
+        result += " " + exp;
+        return result;
+    }
+
+    @Override
+    public Val eval( Env env ) {
+        Env newEnv = letrecDecls.addBindings( env );
+        return exp.eval( newEnv );
+    }
+
+%%%

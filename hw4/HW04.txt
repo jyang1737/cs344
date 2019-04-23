@@ -1,0 +1,104 @@
+CSCI 344 - Programming Language Concepts
+Assignment 4 (40 points)
+Due Monday, February 18, 2019
+
+##QUESTION 1 (20 pts):
+    Consider language V1, with expressions consisting of literals,
+    variables, and primitive applications. You are to add a
+    'neg' primitive that takes a single argument and returns the
+    value of its arithmetic negative. For example, the expression
+
+        neg(add1(3))
+
+    evaluates to -4, and
+
+        neg(neg(42))
+
+    evaluates to 42.
+
+    Create a directory NEG in which you will do your work, and
+    copy the contents of the V1 directory (or expand V1.zip) into
+    this working directory. Rename V1.plcc NEG.plcc.
+
+    Also, modify the specification of the LIT token in your NEG
+    grammar just like we did in class so that a literal can begin
+    with an optional minus sign, with the obvious interpretation.
+    For example, both of the following expressions evaluate to 11:
+
+        neg(-11)
+        add1(10)
+
+    Make sure you have tested your modifications by running plccmk
+    in your NEG directory and evaluating several expressions using
+    your neg primitive and negative literals.
+
+    Grading:
+    5 pts for correct modification of the token (1st part)specification
+    5 pts for correct modification of the BNF rules (2nd part)
+    10 pts for correct implementation of the NegPrim evaluation semantics
+                                                    (3rd part)
+
+    Once you have implemented and tested your changes, zip your entire
+    NEG directory into
+
+        hw04-neg.zip
+
+    Make sure you did not forget anything by unzippping, re-expanding,
+    re-building, and re-testing!!!
+
+##QUESTION 2 (20 pts):
+    Consider language V1, with expressions consisting of literals,
+    variables, and primitive applications. You are to add a
+    string literal type that recognizes tokens like
+
+    "back"
+    "24_for-you"
+    "Are_you_OK?"
+
+    Only double quotes are allowed as delimiters.
+    White spaced is not allowed in strings; this keeps the solution
+    much simpler.
+
+    In addition you will add a new primitive procedure
+
+                    concat( s1, s2 )
+
+    that accepts two string arguments and returns a new string with
+    the characters concatenated together, s1 first.
+
+    Finally, for testing purposes, add the three sample strings above
+    to the hard-wired bindings. Name them s1, s2, and s3, respectively.
+
+    Create a directory STR in which you will do your work, and
+    copy the contents of the V1 directory (or expand V1.zip) into
+    this working directory. Rename V1.plcc STR.plcc.
+
+    Here is a to-do list of changes needed to V1.
+
+    1st Part: new string literal, new primitive procedure name
+    2nd Part: new exp type, new prim type
+    3rd Part: new subclass of Val, StrVal, and
+              new subclass of Prim, ConcatPrim, and
+              new subclass of Exp, StrExp.
+    Also, Val.ijava must be modified to add a default strVal method, and
+          Program.ijava must have the new bindings added.
+
+    Grading:
+    5 pts for correct modification of the token (1st part)specification
+    2 pts for correct modification of the BNF rules (2nd part)
+    13 pts for correct implementation of the NegPrim evaluation semantics
+                                                    (3rd part)
+
+    Once you have implemented and tested your changes, zip your entire
+    STR directory into
+
+        hw04-str.zip
+
+    Make sure you did not forget anything by unzippping, re-expanding,
+    re-building, and re-testing!!!
+
+##SUBMISSION REQUIREMENTS
+-------------------------
+
+Submit both zip files to the Homework 4 drop box.
+

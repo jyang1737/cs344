@@ -1,0 +1,15 @@
+LetIncr
+%%%
+    public String toString() {
+        String result = "let* ";
+        result += letDecls;
+        result += " " + exp;
+        return result;
+    }
+
+    public Val eval(Env env) {
+        Env newEnv = letDecls.addSequentially(env);
+
+        return exp.eval(newEnv);
+    }
+%%%

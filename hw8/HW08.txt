@@ -1,0 +1,153 @@
+CSCI 344
+Homework 8
+TYPE1 and Prolog
+40 Points
+
+Due date: Tuesday, April 2, 2019, 11:59 PM
+
+
+=============================================================================
+
+% QUESTION 1: 15 points
+
+% Rewrite the following code, from SET, for the TYPE1 language.
+% That means you have to enter type information.
+% Put the answer in a file named q1.type1.
+% 
+% Also, there is one thing we did not cover in lecture this semester.
+% Please read Fossum's slides 4.38-4.42.
+
+define add3 = proc( a, b, c ) +( a, +( b, c ) )
+
+define mapReduce = proc( count, start, map, reduce )
+            if zero?( count ) then start
+                else .mapReduce(
+                            sub1(count),
+                            .reduce(start,.map(count)),
+                            map, reduce
+                        )
+
+let
+    i = 3
+    j = 8
+    k = 11
+in
+    .add3( i, j, k )
+
+let
+    starter = 100
+    mapper = proc( x ) *( x, x )
+    reducer = proc( v1, v2 ) .add3( v1, v2, 0 )
+in
+    .mapReduce( 5, starter, mapper, reducer )
+
+=============================================================================
+
+% QUESTION 2: Prolog coding: 10 points
+
+% Compute the k_th integer in a fibonacci-like sequence.
+% j[0] = 0; j[1] = 0; j[2] = 1
+% For k>2, j[k] = ( j[k-3] * j[k-2] ) + j[k-1]
+%
+% Therefore, the sequence starts as follows:
+%
+% 0, 0, 1, 1, 1, 2, 3, 5, 11, 26, 81, 367, ...
+
+% The Prolog procedure should be j/2, where the 1st arg is k and the
+% 2nd is the k_th (from 0) value in the sequence.
+%
+% Here is a small part of the answer to get you started.
+
+j( 0, 0 ).
+
+
+% The following is more advanced stuff with lists. Use it for testing.
+%
+% jseries( 5, Answer ).
+%     should yield
+% Answer = [2, 1, 1, 1, 0, 0]
+%     and no further answers should display
+%
+jseries( 0, [ B ] ) :- j( 0, B ).
+jseries( K, [ B | Rest ] ) :- K > 0, j( K, B ), N is K - 1, jseries( N, Rest ).
+
+% Put your code in a file named q2.pdb.
+
+=============================================================================
+
+% QUESTION 3: Prolog: 15 points
+%
+% Below are listed instances of a 'parent' rule. First argument is the
+% child, second argument is (one of) the child's parent(s).
+
+parent(a,x).
+parent(a,y).
+parent(a,z).
+parent(albert,bob).
+parent(albert,pat).
+parent(b,x).
+parent(b,y).
+parent(b,z).
+parent(c,x).
+parent(c,y).
+parent(c,z).
+parent(cheetara,alluro).
+parent(cheetara,mummra).
+parent(cheetara,tygra).
+parent(chester,moms).
+parent(chester,pops).
+parent(don,bob).
+parent(gaston,arturo).
+parent(gaston,wendy).
+parent(jeff,jaime).
+parent(jeff,wendy).
+parent(jerrod,bob).
+parent(jerrod,chris).
+parent(jody,moms).
+parent(jody,pops).
+parent(liono,alluro).
+parent(liono,snarf).
+parent(liono,tygra).
+parent(maria,jaime).
+parent(maria,wendy).
+parent(panthro,alluro).
+parent(panthro,mummra).
+parent(panthro,tygra).
+parent(sam,moms).
+parent(sam,pops).
+parent(tom,jaime).
+parent(tom,wendy).
+
+% You should make a copy of these facts in your own file called q3.pdb,
+% then add two new procedures to it.
+
+% First, devise a procecure has3Parents/1 that determines if a person
+% has (at least) three parents.
+%
+% TIP: "A \== B" means "A is not bound to the same value as B".
+
+% If you invoke the procedure with a variable, you will likely get the
+% same person listed six times. (There are six such people in the above
+% list of facts, meaning you will get 36 successes.) If you invoke the
+% procedure with an actual person atom, you will likely get 'true' six
+% times. Explain why that happens, or what you did to prevent it from
+% happening.
+
+% Second, devise a procedure partialSiblings/2 that determines if two persons
+% have some, but not all, the same parents (like step brothers/sisters).
+
+% (There are 8 such pairs of partial siblings.)
+% If you put in two actual person atoms, you only get success at most once.
+% But if you enter two variables, the same pair of persons shows up twice.
+% Explain why that happens, or what you did to prevent it from happening.
+%
+% TIPS
+%
+% "\+foo" means "foo cannot be proved".
+%
+% You are not supposed to be using lists to solve these problems.
+
+SUBMISSION.
+
+Upload q1.type1, q2.pdb, and q3.pdb to the dropbox for this homework.
+

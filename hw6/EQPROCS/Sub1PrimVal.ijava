@@ -1,0 +1,14 @@
+Sub1PrimVal
+%%%
+    import java.util.*;
+    public class Sub1PrimVal extends PrimVal {
+        public Val apply(List<Val> args, Env e) {
+            int v0 = ((IntVal) (args.get(0))).v;
+            return new IntVal(v0 - 1);
+        }
+
+        public String toString() {
+            return "sub1";
+        }
+    }
+%%%

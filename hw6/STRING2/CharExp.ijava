@@ -1,0 +1,7 @@
+CharExp
+%%%
+    public Val eval(Env env) {
+        char c = chr.toString().charAt(1);
+        return new IntVal((int) c);
+    }
+%%%

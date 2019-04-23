@@ -1,0 +1,16 @@
+$ rep
+--> s1
+"back"
+--> s2
+"24_for-you"
+--> s3
+"Are_you_OK?"
+--> "i-am-fine"
+"i-am-fine"
+--> concat( "hello,", "world" )
+"hello,world"
+--> concat( s3, "i-am-fine" )
+"Are_you_OK?i-am-fine"
+--> concat(s1,concat(s2,s3))
+"back24_for-youAre_you_OK?"
+-->

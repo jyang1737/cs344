@@ -1,0 +1,15 @@
+DivPrimVal
+%%%
+    import java.util.*;
+    public class DivPrimVal extends PrimVal {
+        public Val apply(List<Val> args, Env e) {
+            int v0 = ((IntVal)(args.get(0))).v;
+            int v1 = ((IntVal)(args.get(1))).v;
+            return new IntVal(v0 / v1);
+        }
+
+        public String toString() {
+            return "/";
+        }
+    }
+%%%

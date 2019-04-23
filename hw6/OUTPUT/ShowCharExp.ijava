@@ -1,0 +1,15 @@
+ShowCharExp:import
+%%%
+import java.io.*;
+%%%
+
+ShowCharExp
+%%%
+    public Val eval(Env env) {
+        Val val = exp.eval(env);
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
+        pw.write(Integer.parseInt(val.toString()));
+        pw.flush();
+        return Val.NIL;
+    }
+%%%

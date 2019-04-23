@@ -1,0 +1,24 @@
+Eval
+%%%
+
+    /**
+     * Evaluate this abstract syntax tree, which represents a single
+     * expression.
+     */
+    @Override
+    public String execute() {
+        String evaluation = null;
+        // String rendering = exp.toString(); // This gets too long!
+        try {
+            evaluation = exp.eval( initEnv ).toString();
+        }
+        catch( Exception e ) {
+            evaluation = "an exception: \"" + e.getMessage() + '"';
+        }
+        return
+           // "The code: " + rendering + '\n' + "  evaluates to " + // too long
+           evaluation;
+    }
+
+%%%
+

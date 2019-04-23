@@ -1,0 +1,15 @@
+ConcatPrimVal
+%%%
+    import java.util.*;
+    public class ConcatPrimVal extends PrimVal {
+        public Val apply(List<Val> args, Env e) {
+            String s0 = ((StrVal)(args.get(0))).v.toString();
+            String s1 = ((StrVal)(args.get(1))).v.toString();
+            return new StrVal(s0+s1);
+        }
+
+        public String toString() {
+            return "concat";
+        }
+    }
+%%%

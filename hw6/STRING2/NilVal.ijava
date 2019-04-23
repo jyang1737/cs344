@@ -1,0 +1,12 @@
+NilVal
+%%%
+public class NilVal implements Val {
+    public String toString() {
+        return "";
+    }
+    public boolean isTrue() {
+            return false;
+    }
+}
+%%%
+
