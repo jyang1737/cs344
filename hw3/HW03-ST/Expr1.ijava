@@ -1,0 +1,7 @@
+Expr1
+%%%
+    public String toString() {
+        return basic.toString() + message.toString();
+    }
+
+%%%

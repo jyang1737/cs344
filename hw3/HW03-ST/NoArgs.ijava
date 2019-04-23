@@ -1,0 +1,6 @@
+NoArgs
+%%%
+    public String toString() {
+        return "." + id.str + "()";
+    }
+%%%

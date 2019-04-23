@@ -1,0 +1,8 @@
+skip WHITESPACE '\s+'
+NUMBER '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+<numSeq> ::= LPAREN <nums> RPAREN
+<nums> **= <NUMBER>
+%

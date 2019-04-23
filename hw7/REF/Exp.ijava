@@ -1,0 +1,14 @@
+Exp
+%%%
+    public abstract Val eval( Env env );
+
+    /**
+     * Most expressions turn into references by wrapping themselves
+     * in a new reference. Exceptions will appear as overrides of
+     * this method in subclasses.
+     */
+    public Ref evalRef( Env env ) {
+        return new ValRef( eval( env ) );
+    }
+%%%
+

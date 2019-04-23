@@ -1,0 +1,38 @@
+REF$ rep
+--> define pair = proc(x,y) proc(t) if t then y else x
+defined
+--> define first = proc(pr) .pr(0)
+defined
+--> define second = proc(pr) .pr(1)
+defined
+--> .first(.pair(4,7))
+4
+--> .second(.pair(4,7))
+7
+--> define empty = 0 % Give the "empty list" a non-list value.
+defined
+--> define list = proc(x,xs) .pair(x,xs)
+defined
+--> define head = proc(xs) .first(xs)
+defined
+--> define tail = proc(xs) .second(xs)
+defined
+--> define lst752 = .list(7, .list(5, .list(2,empty)))
+defined
+--> define lst38752 = .list(3, .list(8, lst752) )
+defined
+--> .head(lst38752)
+3
+--> .head(.tail(.tail(lst38752)))
+7
+--> % OK now the kool part
+define seq = proc(n) .list( n, .seq( add1(n) ) ) % integer list stargin at n
+defined
+--> define natnos = .seq(1)
+Exception in thread "main" java.lang.StackOverflowError
+	at java.base/java.util.ArrayList.grow(ArrayList.java:238)
+	at java.base/java.util.ArrayList.grow(ArrayList.java:242)
+	at java.base/java.util.ArrayList.add(ArrayList.java:485)
+	at java.base/java.util.ArrayList.add(ArrayList.java:498)
+
+        ... and so on

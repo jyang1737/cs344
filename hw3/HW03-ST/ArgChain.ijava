@@ -1,0 +1,22 @@
+ArgChain
+%%%
+   public String toString() {
+       String ret = "";
+       if (symbolList.size() > 0) {
+           ret += ".";
+       }
+       for (Token temp : symbolList) {
+           ret += temp.str;
+       }
+       if (basicList.size() > 0) {
+           ret += "(";
+           ret += basicList.get(0).toString();
+           for (int i = 1; i < basicList.size(); i++) {
+               ret += ",";
+               ret += basicList.get(i).toString();
+           }
+           ret += ")";
+       }
+       return ret;
+   }
+%%%

@@ -1,0 +1,39 @@
+LetrecDecls:import
+%%%
+import java.util.stream.Collectors;
+%%%
+
+LetrecDecls
+%%%
+    @Override
+    public String toString() {
+        String result = "(";
+        String sep = "(";
+        for ( int i = 0; i < procList.size(); ++i ) {
+            result += sep + varList.get( i ) + "," + procList.get( i ) + ")";
+            sep = ",(";
+        }
+        result += ")";
+        return result;
+    }
+
+
+    public Env addBindings( Env enclosingEnv ) {
+
+        EnvNode newEnv = enclosingEnv.extendEnvRef( null );
+                                                // null BindingsObject
+        List< Ref > refList = procList.stream()
+                                .map( proc -> proc.makeClosure( newEnv ) )
+                                .map( ValRef::new )
+                                .collect( Collectors.toList() );
+        List< String > varNameList = varList.stream()
+                                .map( Token::toString )
+                                .collect( Collectors.toList() );
+
+        Bindings bObj = new Bindings( varNameList, refList);
+        newEnv.replaceBindings( bObj ); // Change the null to the real thing.
+
+        return newEnv;
+}
+
+%%%

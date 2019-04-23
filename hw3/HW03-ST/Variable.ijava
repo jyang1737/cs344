@@ -1,0 +1,6 @@
+Variable
+%%%
+    public String toString() {
+        return id.str;
+    }
+%%%

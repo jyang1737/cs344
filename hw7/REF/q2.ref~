@@ -1,0 +1,18 @@
+define node = proc(x,y,z) proc(t) if t then {if sub1(t) then z else y} else x
+define empty = 0
+define empty? = proc(t) if t then 0 else 1
+define value = proc(t) .t(0)
+define left = proc(t) .t(1)
+define right = proc(t) .t(2)
+define nodecount = proc(t) if t then add1(+(.nodecount(.left(t)),.nodecount(.right(t)))) else 0
+
+define rootq1 = .node(47, .node(13, .node(5, empty, empty), .node(8, empty, empty)), .node(34, .node(13, empty, empty), .node(21, empty, empty)))
+
+.nodecount( rootq1 ) % => 7
+.value( rootq1 ) % => 47
+.value( .left( rootq1 ) ) % => 13
+.value( .right( rootq1 ) ) % => 34
+.value( .left( .left( rootq1 ) ) ) % => 5
+.value( .right( .left( rootq1 ) ) ) % => 8
+.value( .left( .right( rootq1 ) ) ) % => 13
+.value( .right( .right( rootq1 ) ) ) % => 21

@@ -1,0 +1,37 @@
+# Tokens
+
+skip whitespace '\s+'
+token LPAREN '\('
+token RPAREN '\)'
+token DOT '\.'
+token NUM '\d+'
+token SYMBOL '[a-zA-Z]\w*:'
+token ID '[a-zA-Z]\w*'
+
+%
+
+# Grammar
+
+<expr> ::= <expr1> DOT
+<expr1> ::= <basic> <message>
+
+<basic>:Literal ::= <NUM>
+<basic>:Variable ::= <ID>
+<basic>:Nested ::= LPAREN <expr1> RPAREN
+
+<message>:NoArgs ::= <ID>
+<message>:Args  ::= <argChain>
+<argChain> **= <SYMBOL> <basic>
+
+%
+
+include ArgChain.ijava
+include Args.ijava
+include Basic.ijava
+include Expr.ijava
+include Expr1.ijava
+include Literal.ijava
+include Message.ijava
+include Nested.ijava
+include NoArgs.ijava
+include Variable.ijava

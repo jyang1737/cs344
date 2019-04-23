@@ -1,0 +1,8 @@
+let
+  x = 3
+  p = proc( t ) set t = add1( t )
+in {
+    .p( 5 )
+    % 5
+}
+

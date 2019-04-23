@@ -1,0 +1,4 @@
+Message
+%%%
+    public abstract String toString();
+%%%

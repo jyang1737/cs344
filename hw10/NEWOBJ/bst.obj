@@ -1,0 +1,87 @@
+define indent = proc( margin ) {
+                        if margin
+                            then { putc " " ; .indent( sub1( margin ) ) }
+                            else 0 
+                    }
+
+define ValNode = class
+                 field value
+                 method init = proc(x) {set <this>value = x; self}
+                 method evaluate = proc() <this>value
+                 method show = proc() {
+                        .<self>showRec( 0 )
+                    }
+                 method showRec = proc( m ) {
+                        display value;
+                        newline
+                    }
+                 end
+
+define TNode = class extends ValNode
+               field left
+               field right
+               method init = proc(x,y,z) {set <this>value = x;
+                                          set <this>left = y;
+                                          set <this>right = z;
+                                          self }
+               method evaluate = proc() error 101
+               method showRec = proc( m ) {
+                        .<super>showRec( m );
+                        .indent(m);
+                        putc "+---";
+                        if left
+                        then .<left>showRec( +(m,4) )
+                        else newline;
+                        .indent(m);
+                        putc "+---";
+                        if right
+                        then .<right>showRec( +(m,4) )
+                        else newline
+                    }
+               end
+
+define AddNode = class extends TNode
+                 method init = proc(x,y) {set <this>left = x;
+                                          set <this>right = y;
+                                          self }
+                 method evaluate = proc() +(.<left>evaluate(), .<right>evaluate())
+                 end
+
+define MultNode = class extends TNode
+                 method init = proc(x,y) {set <this>left = x;
+                                          set <this>right = y;
+                                          self }
+                 method evaluate = proc() *(.<left>evaluate(), .<right>evaluate())
+                 end
+
+define BSTNode = class extends TNode
+                 method init = proc(x,y,z) error 102
+                 method insert = proc(x) if =?(<this>value, nil)
+                                              then {set <this>value = x; self}
+                                              else
+                                                  if <?(x, <this>value)
+                                                      then if =?(<this>left, nil)
+                                                               then set <this>left = .<new BSTNode>insert(x)
+                                                               else .<<this>left>insert(x)
+                                                      else
+                                                           if =?(<this>right, nil)
+                                                               then set <this>right = .<new BSTNode>insert(x)
+                                                               else .<<this>right>insert(x) 
+                 end
+
+%define v1 = .<new ValNode>init(1)
+%define v2 = .<new ValNode>init(2)
+%define v3 = .<new ValNode>init(3)
+%define v4 = .<new ValNode>init(4)
+
+%define a1 = .<new AddNode>init(v1, v2)
+%define a2 = .<new AddNode>init(v3, v4)
+%define a3 = .<new AddNode>init(a1, a2)
+
+%define t1 = .<new TNode>init(5, v1, v2)
+%define t2 = .<new TNode>init(6, v3, v4)
+%define t3 = .<new TNode>init(7, t1, t2)
+
+%define a = .<new AddNode>init(.<new ValNode>init(3),.<new ValNode>init(4))
+%define b = .<new AddNode>init(.<new ValNode>init(5),.<new ValNode>init(6))
+%define c = .<new MultNode>init(a,b)

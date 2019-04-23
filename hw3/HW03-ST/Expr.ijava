@@ -1,0 +1,6 @@
+Expr
+%%%
+    public String toString() {
+        return expr1.toString();
+    }
+%%%

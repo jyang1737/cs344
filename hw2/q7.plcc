@@ -1,0 +1,58 @@
+skip WHITESPACE '\s+'
+token ID '[a-zA-Z]+'
+token NUMBER '[0-9]+\.*[0-9]*'
+token COMMA '\,'
+token LSQBR '\['
+token RSQBR '\]'
+%
+<funcDef> ::= <ID> LSQBR <arg> <arglist> RSQBR
+<arglist>:Empty ::= 
+<arglist>:Multi ::= COMMA <arg> <arglist>
+<arg>:Number ::= <NUMBER>
+<arg>:Word ::= <ID>
+%
+FuncDef
+
+%%%
+public String toString() {
+       String result = arg + "." + id + "(" + arglist + ")";
+       return result;
+}
+%%%
+
+Number
+
+%%%
+public String toString() {
+       return number.toString();
+}
+%%%
+
+Word
+
+%%%
+public String toString() {
+       return id.toString();
+}
+
+%%%
+
+
+Multi
+
+%%%
+public String toString() {
+       String result = arg.toString();
+       if (!(arglist instanceof Empty))
+              result = result + ", " + arglist.toString();
+       return result;
+}
+%%%
+
+Empty
+
+%%%
+public String toString() {
+       return "";
+}
+%%%

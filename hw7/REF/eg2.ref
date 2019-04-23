@@ -1,0 +1,4 @@
+let
+  add = proc( x ) proc( y ) +( x, y )
+in
+  ..add( 3 )( 5 )

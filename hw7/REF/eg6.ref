@@ -1,0 +1,15 @@
+let
+  x = 10
+  y = 1
+in
+  let
+    funky = proc( b ) {
+        set y = +( y, 1 );
+        set x = +( x, b );
+        set y = +( y, 1 );
+        set x = +( x, b );
+        x
+    }
+  in
+    .funky( +( y, 1 ) )
+

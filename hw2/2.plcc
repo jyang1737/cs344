@@ -1,0 +1,10 @@
+skip WHITESPACE '\s+'
+token NUMBER '\d+'
+token LPAREN '\('
+token RPAREN '\)'
+%
+<numSeq> ::= LPAREN <nums> RPAREN
+<nums>:Empty ::=
+<nums>:NonEmpty ::= <NUMBER> <nums>
+<nums>:NonEmptyList  ::= <numSeq> <nums>
+%

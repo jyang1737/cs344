@@ -1,0 +1,21 @@
+define node = proc(x,y,z) proc(t) if t then {if sub1(t) then z else y} else x
+define empty = 0
+define empty? = proc(t) if t then 0 else 1
+define value = proc(t) .t(0)
+define left = proc(t) .t(1)
+define right = proc(t) .t(2)
+define nodecount = proc(t) if t then add1(+(.nodecount(.left(t)),.nodecount(.right(t)))) else 0
+
+define inftree = proc(x) .node(x, .inftree(*(2, x)), .inftree(+(1, *(2, x))))
+
+define rootq3 = .inftree(1)
+
+.value(rootq3)
+.left(rootq3)
+.right(rootq3)
+.value(.left(rootq3))
+.value(.right(rootq3))
+.value(.left(.left(rootq3)))
+.value(.right(.left(rootq3)))
+.value(.left(.right(rootq3)))
+.value(.right(.right(rootq3)))

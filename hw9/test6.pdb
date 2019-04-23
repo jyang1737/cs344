@@ -1,0 +1,16 @@
+
+% This program is sneaky. It uses universally quantified variables
+% for wall and goal.
+
+boundary( 4, 3 ).
+
+goal( X, Y ) :- X =:= Y.
+
+wall( X, Y ) :- X =:= Y - 1.
+
+% 0,3
+% 3,0
+
+:- load_files( 'print-maze.pdb' ). % Instructor support code
+
+:- load_files( 'maze.pdb' ). % Student assignment code

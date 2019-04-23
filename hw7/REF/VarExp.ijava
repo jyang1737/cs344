@@ -1,0 +1,22 @@
+VarExp
+%%%
+    @Override
+    public String toString() {
+        return var.toString();
+    }
+
+    @Override
+    public Val eval( Env env ) {
+        return env.applyEnv( var.toString() );
+    }
+
+    /**
+     * Variables are bound to references in the environment, so to
+     * get a reference from a variable, just look it up.
+     */
+    @Override
+    public Ref evalRef( Env env ) {
+        return env.applyEnvRef( var.toString() );
+    }
+%%%
+

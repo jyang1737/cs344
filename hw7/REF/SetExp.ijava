@@ -1,0 +1,22 @@
+SetExp
+
+%%%%
+
+    /**
+     * Return this set expression's evaluated value. As a side effect,
+     * set the named (existing) variable to a new value.
+     * @return the new value
+     */
+    @Override
+    public Val eval( Env env ) {
+        Val val = exp.eval( env );
+        Ref ref = env.applyEnvRef( var.toString() );
+        return ref.setRef( val );
+    }
+
+    @Override
+    public String toString() {
+        String result = var + " := " + exp;
+        return result;
+    }
+%%%%

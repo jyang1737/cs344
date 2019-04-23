@@ -1,0 +1,17 @@
+IfExp
+%%%
+    @Override
+    public String toString() {
+        return test + " ? " + thenPart + " : " + elsePart;
+    }
+
+    @Override
+    public Val eval( Env env ) {
+        Val val = test.eval( env );
+        if ( !(val instanceof IntVal) ) return thenPart.eval( env );
+        return ((IntVal)val).isTrue() ?
+                          thenPart.eval( env ) :
+                          elsePart.eval( env );
+    }
+%%%
+

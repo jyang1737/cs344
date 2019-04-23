@@ -1,0 +1,111 @@
+# Language SET: variable reassignment
+# This language allows the side effect of giving a variable a new value.
+
+skip WHITESPACE '\s+'
+skip COMMENT '%.*'
+
+token ADD1OP 'add1'
+token ADDOP '\+'
+token COMMA ','
+token DEFINE 'define'
+token DIVOP '/'
+token DOT '\.'
+token ELSE 'else'
+token EQUALS '='
+token IF 'if'
+token LET 'let'
+token LETREC 'letrec'
+token LBRACE '\{'
+token LPAREN '\('
+token MULOP '\*'
+token IN 'in'
+token PROC 'proc'
+token RBRACE '\}'
+token RPAREN '\)'
+token SEMI ';'
+token SET 'set'
+token SUB1OP 'sub1'
+token SUBOP '\-'
+token THEN 'then'
+token ZEROP 'zero\?'
+
+token LIT '-?\d+'
+token VAR '[A-Za-z]\w*\??'
+
+%
+<program>:Define ::= DEFINE <VAR> EQUALS <exp>
+<program>:Eval   ::= <exp>
+
+<exp>:AppExp     ::= DOT <exp> LPAREN <rands> RPAREN # APPly (call) a proc
+<exp>:IfExp      ::= IF <exp>test THEN <exp>thenPart ELSE <exp>elsePart
+<exp>:LetExp     ::= LET <letDecls> IN <exp>
+<exp>:LetrecExp  ::= LETREC <letrecDecls> IN <exp>
+<exp>:LitExp     ::= <LIT>
+<exp>:PrimAppExp ::= <prim> LPAREN <rands> RPAREN
+<exp>:ProcExp    ::= <proc> # represents a procedure, not a procedure call
+<exp>:SeqExp     ::= LBRACE <exp> <seqExps> RBRACE
+<exp>:SetExp     ::= SET <VAR> EQUALS <exp>
+<exp>:VarExp     ::= <VAR>
+
+<letDecls>       **= <VAR> EQUALS <exp>
+<letrecDecls>    **= <VAR> EQUALS <proc>
+
+<rands>          **= <exp> +COMMA
+
+<seqExps>        **= SEMI <exp>
+
+<prim>:AddPrim   ::= ADDOP
+<prim>:SubPrim   ::= SUBOP
+<prim>:MulPrim   ::= MULOP
+<prim>:DivPrim   ::= DIVOP
+<prim>:Add1Prim  ::= ADD1OP
+<prim>:Sub1Prim  ::= SUB1OP
+<prim>:ZeropPrim  ::= ZEROP
+
+<proc>           ::= PROC LPAREN <formals> RPAREN <exp> # param list, body
+<formals>        **= <VAR> +COMMA
+
+%
+
+# class methods for the semantics phase
+
+include Add1Prim.ijava
+include AddPrim.ijava
+include AppExp.ijava
+include Define.ijava
+include DivPrim.ijava
+include Eval.ijava
+include Exp.ijava
+include Formals.ijava
+include IfExp.ijava
+include LetDecls.ijava
+include LetrecDecls.ijava
+include LetExp.ijava
+include LetrecExp.ijava
+include LitExp.ijava
+include MulPrim.ijava
+include Prim.ijava
+include PrimAppExp.ijava
+include Proc.ijava
+include ProcExp.ijava
+include Program.ijava
+include Rands.ijava
+include SeqExp.ijava
+include SetExp.ijava
+include Sub1Prim.ijava
+include SubPrim.ijava
+include VarExp.ijava
+include ZeropPrim.ijava
+
+# Environment classes
+#
+include Binding.ijava
+include Bindings.ijava
+include Env.ijava
+include EnvNode.ijava
+include IntVal.ijava
+include ProcVal.ijava
+include Ref.ijava
+include Val.ijava
+include ValRef.ijava
+

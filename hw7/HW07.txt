@@ -1,0 +1,231 @@
+CSCI 344 - Programming Language Concepts
+Assignment 7: Building Trees with Procedures
+
+Due Friday, March 22, 2019
+40 points total
+
+You are to use our recently developed languages to write the procedures
+necessary to build a binary tree, a binary search tree, and an
+infinite-sized binary tree.
+
+QUESTION #1 (20 pts) The Basic Binary Tree
+
+Use the REF language for this question.
+
+STEP 1
+
+  Define the proc node to represent a node in the tree.
+
+  If we define trp to be .node( a, b, c ), then
+  .trp( 0 ) is a and represents the node's value..
+  .trp( 1 ) is b and represents the node's left subtree..
+  .trp( 2 ) is c and represents the node's right subtree..
+
+  As with the list example,
+  - Define empty to be 0. This will be used to construct a leaf: a node
+    that has no left and/or right subtree.
+  - Define the predicate empty? to return 0 if its argument is a
+    non-empty tree and 1 if its argument is empty.
+
+STEP 2
+
+  Define convenience functions for the node.
+
+  .value( node ) returns the node's value.
+  .left( node ) returns the node's left subtree.
+  .right( node ) returns the node's right subtree.
+
+STEP 3
+
+  Define the proc nodecount to return the number of non-empty nodes
+  in its argument tree.
+
+STEP 4
+
+  Just as a demonstration, manually create a complete three-level binary
+  tree containing the leaves with values, from left to right, 5, 8, 13,
+  and 21.  Each inner node's value is the sum of its children's values.
+  Name the root of the tree rootq1. Make sure the following expressions
+  yield the expected results. (Again, in the REF language.)
+
+  .nodecount( rootq1 ) % => 7
+  .value( rootq1 ) % => 47
+  .value( .left( rootq1 ) ) % => 13
+  .value( .right( rootq1 ) ) % => 34
+  .value( .left( .left( rootq1 ) ) ) % => 5
+  .value( .right( .left( rootq1 ) ) ) % => 8
+  .value( .left( .right( rootq1 ) ) ) % => 13
+  .value( .right( .right( rootq1 ) ) ) % => 21
+
+Put the following items in a text file called q1.ref
+
+define for node proc
+define for empty integer value
+define for value proc
+define for left proc
+define for right proc
+define for nodecount proc
+define for rootq1 proc (from applications of node)
+.nodecount( rootq1 )
+the seven value proc applications listed above
+
+If sent to the Rep program, the code should generate the following output.
+7
+47
+13
+34
+5
+8
+13
+21
+
+==========================================================================
+
+QUESTION #2 (10 pts)
+
+Write a proc bstinsert that takes a binary tree node and a value and
+inserts the value into the tree rooted at that node according to rules
+for binary trees.
+
+For example, if you insert the values 6, 8, 2, 3, 5, 9, 1
+in that order, the tree would end up looking like this if leaves are
+shown to the right and the left child is shown above the right:
+
+6 ---+--- 2 ---+--- 1
+     |         |
+     |         +--- 3 ---+
+     |                   |
+     |                   +--- 5
+     |
+     +--- 8 ---+
+               |
+               +--- 9
+
+Note that "set" is not easy to use with trees. (Anyone want to try?) So
+you will have to rebuild the tree every time and return a brand new
+root.
+
+STEP 1
+
+  Copy the defined procs from q1.ref into q2.ref.
+
+STEP 2
+
+  We do not have an inequality comparison proc or primitive. Add the
+  following code to q2.ref.
+
+        define leq = proc( a, b )
+                if zero?( -(a,b) ) then 1
+                    else .leq2( add1(a), b, a, add1(b) )
+
+        define leq2 = proc( ua, b, a, ub )
+                if zero?( -(ua,b) ) then 1 else if zero?( -(a,ub) ) then 0
+                    else .leq2( add1(ua), b, a, add1(ub) )
+
+STEP 3
+
+  Write your proc for bstinsert using leq for value comparisons.
+  Place it at the end of q2.ref.
+
+STEP 4
+
+  Just as a demonstration, add the following code to the end of q2.ref.
+
+        define rootq2 = empty
+        define rootq2 = .bstinsert( rootq2, 6 )
+        define rootq2 = .bstinsert( rootq2, 8 )
+        define rootq2 = .bstinsert( rootq2, 2 )
+        define rootq2 = .bstinsert( rootq2, 3 )
+        define rootq2 = .bstinsert( rootq2, 5 )
+        define rootq2 = .bstinsert( rootq2, 9 )
+        define rootq2 = .bstinsert( rootq2, 1 )
+
+        .nodecount( rootq2 ) % => 7
+        .value( rootq2 ) % => 6
+        .value( .left( rootq2 ) ) % => 2
+        .value( .left( .left( rootq2 ) ) ) % => 1
+        .value( .right( .left( rootq2 ) ) ) % => 3
+        .value( .right( .right( .left( rootq2 ) ) ) ) % => 5
+        .value( .right( rootq2 ) ) % => 8
+        .value( .right( .right( rootq2 ) ) ) % => 9
+
+Make sure the file q2.ref executes with the REF language as expected.
+
+==========================================================================
+
+QUESTION #3 (10 pts) Infinite Tree
+
+Use the NAME language to write the procedures necessary to build an
+infinite-sized binary tree. Just as with the list example from class,
+we use the NAME language to delay evaluation of arguments so that
+representing an infinite-sized structure is possible. The values in
+the tree should remind you of how heaps are stored in a linear array
+structure. You may recall the following.
+
+  The index of the root is 1
+  The index of the left child of the node at index n is 2*n.
+  The index of the right child of the node at index n is 2*n + 1.
+
+The nodes of this simple tree will contain the index values described above.
+
+STEP 1
+
+  Copy the following previous definitions into a new file q3.name:
+    node
+    value
+    left
+    right
+    nodecount
+
+STEP 2
+
+  Define the proc inftree. Its argument is the value in the root node. So
+  if we set r to .inftree(5), then .value( r ) is 5, .value(.left(r))
+  is 10, and .value(.right(r)) is 11, and so on
+
+    5-+-10-+-20-+- - -
+      |    |    |
+      |    |    +- - -
+      |    |
+      |    +-21-+- - -
+      |         |
+      |         +- - -
+      |
+      +-11-+-22-+- - -
+           |    |
+           |    +- - -
+           |
+           +-23-+- - -
+                |
+                +- - -
+
+  But you will not do this. Define rootq3 as follows.
+
+    define rootq3 = .inftree( 1 )
+
+  This will follow the index rules described at the beginning of the
+  question.
+
+  Add the inftree and rootq3 definitions to q3.name.
+
+STEP 3
+
+  Add the following test expressions to the end of q3.name.
+
+  .value(rootq3) % => 1
+  .left(rootq3) % => proc
+  .right(rootq3) % => proc
+  .value(.left(rootq3)) % => 2
+  .value(.right(rootq3)) % => 3
+  .value(.left(.left(rootq3))) % => 4
+  .value(.right(.left(rootq3))) % => 5
+  .value(.left(.right(rootq3))) % => 6
+  .value(.right(.right(rootq3))) % => 7
+
+  Make sure you get the indicated answers when you run q3.name.
+
+SUBMISSION
+
+  Submit q1.ref, q2.ref, and q3.name separately to the dropbox for
+  this homework.
+

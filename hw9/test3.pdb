@@ -1,0 +1,17 @@
+
+goal( 2, 2 ).
+boundary( 3, 3 ).
+
+wall( 0, 1 ).
+wall( 0, 2 ).
+wall( 1, 0 ).
+wall( 1, 1 ).
+wall( 1, 2 ).
+wall( 2, 0 ).
+wall( 2, 1 ).
+
+% 0,0
+
+:- load_files( 'print-maze.pdb' ). % Instructor support code
+
+:- load_files( 'maze.pdb' ). % Student assignment code

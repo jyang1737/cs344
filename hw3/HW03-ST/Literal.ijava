@@ -1,0 +1,6 @@
+Literal
+%%%
+    public String toString() {
+        return num.str;
+    }
+%%%

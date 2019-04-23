@@ -1,0 +1,10 @@
+skip WHITESPACE '\s+'
+skip DOUBLEDASH '--[\w]*'
+token BEGIN 'begin'
+token END 'end'
+token PROC 'proc'
+token HALT 'halt'
+token THING 'thing'
+token ID '[a-zA-Z0-9_]+'
+%
+%

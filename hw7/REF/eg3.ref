@@ -1,0 +1,1 @@
+let x = 1 p = proc( y ) set y = add1(y) in { .p(x); .p(x); x }

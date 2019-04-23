@@ -1,0 +1,6 @@
+Args
+%%%
+    public String toString() {
+        return argChain.toString();
+    }
+%%%

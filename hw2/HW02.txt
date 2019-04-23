@@ -1,0 +1,250 @@
+CSCI 344 - Programming Language Concepts
+Assignment A1 (53 points)
+Due Friday, February 1, 2019
+
+NOTE:
+You are to answer each of these questions, indicated by lines following
+each '##QUESTION:' line, by entering your corresponding answer lines
+following each '##ANSWER:' line. Please leave whitespace around your
+answers so they are easy to read. DO NOT ADD ANY TEXT TO THE '##ANSWER:'
+LINE.
+
+You should know that it is possible that some questions that ask for
+lists could have an empty answer.
+
+Your submission must include this TEXT file, with your answers added as
+described above. Copy this file into a suitable working directory and
+edit this file using a text editor (NOT a word processor) by adding your
+answers.
+
+In some cases, your answers may be Java methods or PLCC grammar
+file entries. In other cases, your answers may be a short paragraph
+or other text that meets the problem specifications. Sometimes your
+answer is a file that is submitted along with this file.
+
+DO NOT MAKE ANY CHANGES TO THE QUESTIONS OR OTHER TEXT CONTAINED IN
+THIS FILE except for adding your answers to the questions or replacing
+obvious directives such as "<Replace this ...>" or "**FIXME**". Be sure
+your answers are on lines that *follow* each '##ANSWER:' line. Add more
+whitespace in your answer lines if you need to do so, but LEAVE THE
+ORIGINAL FILE CONTENTS AS-IS.
+
+As described in the ##SUBMISSION REQUIREMENTS section at the end of this
+assignment description, your edited file 'HW02.txt' will become part of your
+myCourses submission.
+
+##QUESTION:
+1. (10 pts)
+    Write a lexical specification acceptable to PLCC that skips over
+    whitespace plus all characters from a '--' string to the end
+    of the line. The lexical specification should accept the following
+    strings as specific tokens / reserved keywords:
+
+        begin
+        end
+        proc
+        halt
+        thing
+
+    You should use appropriate token class names for the above tokens.
+    All other unbroken strings of letters, digits, and underscores
+    should be returned as a ID tokens. If you encounter anything that
+    does not conform to these specifications, it's an error.
+
+    Consider the following input to the scanner (Scan):
+
+        -- example input
+        begin thing -- the other thing
+        otherwise proc thing
+        begin halt something end
+        pasta_fagiole--other--other--other
+        proc mend99 12345xxx _!
+
+    The scanner output should look like this:
+
+        BEGIN: 'begin'
+        THING: 'thing'
+        ID: 'otherwise'
+        PROC: 'proc'
+        THING: 'thing'
+        BEGIN: 'begin'
+        HALT: 'halt'
+        ID: 'something'
+        END: 'end'
+        ID: 'pasta_fagiole'
+        PROC: 'proc'
+        ID: 'mend99'
+        ID: '12345xxx'
+        ID: '_'
+        <Error occurs here.>
+
+##ANSWER:
+
+skip WHITESPACE '\s+'
+skip DOUBLEDASH '--[\w]*'
+token BEGIN 'begin'
+token END 'end'
+token PROC 'proc'
+token HALT 'halt'
+token THING 'thing'
+token ID '[a-zA-Z0-9_]+'
+
+##QUESTION:
+2. (8 pts)
+    Consider the following grammar rule in a PLCC file:
+
+        <bumper>:Cautious ::= I <BRAKE> FOR <coders>
+
+    a. What abstract class is assumed to exist?
+
+    b. What (non-abstract) Java class does this grammar rule define, and
+    what are its instance variables and types?  Write your answer in the
+    form of a Java signature for the constructor for the class:
+
+        XXX(AAA aaa, BBB bbb, ...)
+
+    Here XXX is the class name, and the instance variables are aaa
+    of type AAA, bbb of type BBB, and so forth.
+
+    c. What token types are assumed to exist if the above rule is legal?
+
+    d. What other class types are assumed to exist if the above rule is legal?
+
+##ANSWER:
+
+a. Bumper class is abstract.
+
+b. Cautious(Token brake, Coders coders)
+
+c. Brake token
+
+d. Coders
+
+##QUESTION:
+3. (8 pts)
+    Repeat the sub-questions above, except use the following grammar rule:
+
+        <classes> ::= I AM TAKING <class>c1 <class>c2 AND <class>c3
+
+##ANSWER:
+
+a. Class
+
+b. Classes(Class c1, Class c2, Class c3)
+
+c. I, am, taking, and
+
+d. None
+
+##QUESTION:
+4. (5 pts)
+    In the following grammar rule:
+
+        <coders> **= <coder>
+
+    a. What (non-abstract) Java class does this grammar rule define, and
+    what are its instance variables and types?  Write your answer in the
+    same style as the previous questions.
+
+    b. What other class types are assumed to exist if the above rule is legal?
+
+##ANSWER:
+
+a. Coders(List<Coder> coder)
+
+b. Coder
+
+##QUESTION:
+5. (2 pts)
+    What is wrong with this grammar rule in a PLCC file?  You can assume
+    that this is part of a larger PLCC grammar file in which other token
+    specifications and grammar rules may appear. Your answer should be
+    a grammar rule that fixes all of the obvious errors on this line
+    and that will be acceptable to PLCC. Your answer should keep the
+    essential nature of the grammar rule.
+
+    Do *not* add or remove any of the '<' or '>' characters.
+
+        <VAR>  := tok <foo>
+
+##ANSWER:
+To create the grammar rule, it should be ::=. Also, since VAR is in all caps,
+it is assumed to be a token type, which cannot be on the left side of a grammar
+rule. 
+
+##QUESTION:
+6. (10 pts)
+    Revise a numlist*.plcc grammar file's second section so that it
+    accepts lists consisting of numbers or other lists.
+    Any list may be empty.
+    Here are some examples.
+
+                ( 1 2 89 )
+                ()
+                ( 1 ( 2 89 ) )
+                ( 1 ( 2 ( 89 () ) ) )
+                ( ( (1) 2 (3) ) 4 ( (5) 6 (7) ) )
+                        -- ^ a binary search tree
+
+    Your BNF grammar should use the token names LPAREN, RPAREN,
+    and NUM. Use <prog> as the first nonterminal (and hence the
+    start symbol). You should be able to define your grammar in less
+    than five BNF lines using two nonterminals.
+
+    (Avoid using class names like <list> or :List since they are
+    also names of built-in classes.)
+
+    Just show the grammar, not all the sections of a plcc file.
+    But if you feel so inclined, you can create a grammar file acceptable
+    to PLCC, so you can check your grammar with actual input strings.
+
+##ANSWER:
+
+<numSeq> ::= LPAREN <nums> RPAREN
+<nums>:Empty ::=
+<nums>:NonEmpty ::= <NUMBER> <nums>
+<nums>:NonEmptyList  ::= <numSeq> <nums>
+
+##QUESTION:
+7. (10 pts)
+    Write a complete grammar file that accepts procedure calls of this form.
+
+        proc [ arg0, arg1, ..., argN ]
+
+    Here are details.
+    - Identifiers, including the procedure's name, are strings consisting
+      purely of upper- and lower-case
+      letters from the standard Latin alphabet.
+    - Numbers are decimal integers (123) or fixed-point (12.34); no
+      scientific notation.
+    - The "proc" must be an identifier.
+    - The "arg"'s may be either identifiers or numbers, and are
+      separated by commas.
+    - There must be at least one "arg".
+
+    When your generated compiler is executed, it should just reformat
+    the expression as follows.
+
+        arg0.proc( arg1, ..., argN )
+
+##SUBMISSION
+    Do *not* put your grammar file contents here. Instead, see the
+    ##SUBMISSION REQUIREMENTS below.
+
+##SUBMISSION REQUIREMENTS
+    Create a flat zip file HW02.zip containing ONLY the following files:
+
+    HW02.txt (this file, with your answers in each ##ANSWER section)
+    q7.plcc (the one you created in Question 7 above)
+
+##SUBMISSION TIPS:
+
+    Copy this file (HW02.txt) to a suitable directory and make changes to
+    this file before submitting it. Do *not* make any changes to the file
+    EXCEPT BY ADDING YOUR ANSWERS FOLLOWING EACH OF THE ##ANSWER lines.
+
+    A 'flat' zip file contains only files, no directories. When we unzip
+    your HW02.zip submission, we should see *only* the files 'HW02.txt'
+    and 'q7.plcc'; nothing else.
+
+    Submit your zip file to your Homework 2 dropbox in MyCourses.

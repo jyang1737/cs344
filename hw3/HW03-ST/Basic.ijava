@@ -1,0 +1,4 @@
+Basic
+%%%
+    public abstract String toString();
+%%%

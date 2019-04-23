@@ -1,0 +1,23 @@
+Program
+%%%
+    // The program's global environment
+    protected static Env initEnv = Env.NULL.extendEnvRef(new Bindings());
+
+    /**
+     * The PLCC-generated code includes main programs that call toString()
+     * on the root of the abstract syntax tree. In this design of the
+     * tree nodes, we immediately invoke the abstract method execute()
+     * to tell the tree to evaluate itself.
+     */
+    @Override
+    public String toString() {
+        return execute();
+    }
+
+    /**
+     * Evaluate the entire generated abstract syntax tree.
+     * (We currently assume that the Program node is always the tree's root.)
+     */
+    public abstract String execute();
+%%%
+

@@ -1,0 +1,2 @@
+findGoal(p(X,Y)) :- findGoal(p(X,Y),L).
+findGoal(p(X,Y),L) :- goal(X,Y).

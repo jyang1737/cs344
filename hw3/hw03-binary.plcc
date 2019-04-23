@@ -1,0 +1,84 @@
+token NL '\n'
+token ZERO '0'
+token ONE '1'
+
+%
+
+<binary> ::= <digit> NL
+<digit>:Zero ::= <ZERO> <digit>
+<digit>:One ::= <ONE> <digit>
+<digit>:NoDigit ::=   
+
+%
+
+Binary
+%%%
+    public String toString() {
+        int total;
+        int first = digit.getVal();
+        if (first == 1) {
+            total = 0;
+            total = digit.getTotalR(total);
+            total = -1 * (total + 1);
+        }
+        else {
+            total = 0;
+            total = digit.getTotal(total);
+        }
+        return "decimal: " + total;
+    }
+%%%
+
+Digit
+%%%
+    public abstract int getTotalR(int total);
+    public abstract int getTotal(int total);
+    public abstract int getVal();
+%%%
+
+Zero
+%%%
+    public int getTotalR(int total) {
+        return digit.getTotalR(total * 2 + 1);
+    }
+    
+    public int getTotal(int total) {
+    
+        return (total == 0) ? digit.getTotal(0) : digit.getTotal(total * 2);
+    }
+
+    public int getVal() {
+        return 0;
+    }
+    
+%%%
+
+One
+%%%
+    public int getTotalR(int total) {
+        return digit.getTotalR(total * 2);
+    }
+
+    public int getTotal(int total) {
+        return digit.getTotal(total * 2 + 1);
+    }
+    
+    public int getVal() {
+        return 1;
+    }
+%%%
+
+NoDigit
+%%%
+    public int getTotalR(int total) {
+        return total;
+    }
+    
+    public int getTotal(int total) {
+        return total;
+    }
+    
+    public int getVal() {
+        return 0;
+    }
+%%%

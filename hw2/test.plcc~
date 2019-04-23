@@ -1,0 +1,4 @@
+skip WHITESPACE '\s+'
+NUMBER '\d+'
+LPAREN '\('
+RPAREN '\)'

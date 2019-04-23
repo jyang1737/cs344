@@ -1,0 +1,33 @@
+% This code prints the maze specified by wall, goal, and boundary facts.
+% It will not work right if there is more than one boundary fact specified.
+%
+% Author: James Heliotis
+% April 2019
+
+printMaze() :- boundary(XMAX,YMAX), \+printMaze( p(-1,YMAX), XMAX ).
+
+printMaze( p( _, Y ), _ ) :- Y < -1, fail.
+printMaze( p( X, Y ), XMAX ) :- Y >= -1, X > XMAX,
+                                    nl,
+                                    NewY is Y - 1,
+                                    printMaze( p(-1,NewY), XMAX ).
+printMaze( p( X, Y ), XMAX ) :- Y >= -1, X =< XMAX,
+                                    printSpot( X, Y ),
+                                    NewX is X + 1,
+                                    printMaze( p(NewX,Y), XMAX ).
+
+printSpot( X, Y ) :- (
+                        ( X is -1, Y is -1 );
+                        ( boundary( X, _ ), Y is -1 );
+                        ( boundary( _, Y ), X is -1 );
+                        boundary( X, Y )
+                     ),
+                     !, write( '+' ).
+printSpot( X, Y ) :- ( boundary( X, _ ); X = -1 ),
+                        !, N is Y mod 10, write( N ).
+printSpot( X, Y ) :- ( boundary( _, Y ); Y = -1 ),
+                        !, N is X mod 10, write( N ).
+printSpot( X, Y ) :- goal( X, Y ), !, write( '*' ).
+printSpot( X, Y ) :- wall( X, Y ), !, write( '-' ).
+printSpot( _, _ ) :- write( ' ' ).
+

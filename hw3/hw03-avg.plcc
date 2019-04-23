@@ -1,0 +1,49 @@
+# numlistv6.plcc
+#
+# Change semantic action to print the minimum value of the list.
+# NOTE that this is the recursive grammar.
+
+# Lexical specification
+skip WHITESPACE '\s+'
+LPAREN '\('
+RPAREN '\)'
+NUM '\d+'
+%
+# Grammar
+<numSeq>        ::= LPAREN <NUM> <nums> RPAREN
+<nums>:NumsNode ::= <NUM> <nums>
+<nums>:NumsNull ::=
+%
+
+# add a toString method to the NumSeq class
+NumSeq
+%%%
+    public String toString() {
+        Double total = Double.parseDouble(num.str);
+        int ctr = 1;
+        Double avg = nums.getAvg(total, ctr); // get the overall minimum
+        return avg.toString();
+    }
+%%%
+
+Nums
+%%%
+    public abstract Double getAvg(Double total, int ctr);
+%%%
+
+NumsNode    
+%%%
+    public Double getAvg(Double total, int ctr) {
+        Double nxtNum = Double.parseDouble(num.str);
+        total += nxtNum;
+        ctr++;
+        return nums.getAvg(total, ctr);
+    }          
+%%%
+
+NumsNull
+%%%
+    public Double getAvg(Double total, int ctr) {
+        return total/ctr;
+    }
+%%%
