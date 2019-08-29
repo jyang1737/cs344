@@ -1,1 +1,1 @@
-# cs344
+# cs344 - Programming Language Concepts
